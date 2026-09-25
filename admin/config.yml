@@ -40,6 +40,16 @@ collections:
       - { label: Destek bilgisi, name: destek, widget: string, required: false }
       - { label: Kimler başvurabilir, name: hedef, widget: string, required: false }
       - { label: Çağrının resmi sayfası, name: link, widget: string, required: false, hint: "https:// ile başlayan tam adres" }
+      - label: Ek bilgiler
+        name: ek_bilgiler
+        widget: list
+        required: false
+        hint: "İstediğin kadar satır ekle, örnek: Başlık 'Destek üst limiti', Değer '5.000.000 TL'"
+        summary: "{{fields.baslik}}: {{fields.deger}}"
+        fields:
+          - { label: Başlık, name: baslik, widget: string }
+          - { label: Değer, name: deger, widget: string }
+          - { label: Listelerdeki kartta da göster, name: kartta, widget: boolean, default: false, required: false }
       - { label: Eklenme tarihi, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
       - { label: Açıklama, name: body, widget: markdown, required: false }
 
