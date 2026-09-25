@@ -1,0 +1,11 @@
+{% if include.logolar and include.logolar.size > 0 %}
+<ul class="logo-izgara">
+  {% for l in include.logolar %}
+  <li>
+    {% if l.link and l.link != "" %}<a href="{{ l.link }}" target="_blank" rel="noopener">{% endif %}
+    {% if l.logo %}<img src="{{ l.logo | relative_url }}" alt="{{ l.ad }}" loading="lazy">{% else %}<span>{{ l.ad }}</span>{% endif %}
+    {% if l.link and l.link != "" %}</a>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

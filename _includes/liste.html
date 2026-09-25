@@ -1,0 +1,120 @@
+{% assign bos = '<p class="bos">Bu bölüme henüz içerik eklenmedi.</p>' %}
+{% case include.tur %}
+
+{% when "ekip" or "yonetim" %}
+  {% if include.tur == "yonetim" %}{% assign grup = "Yönetim Kurulu" %}{% else %}{% assign grup = "Ekip" %}{% endif %}
+  {% assign kisiler = site.ekip | where: "grup", grup | sort: "sira", "last" %}
+  {% if kisiler.size > 0 %}
+  <div class="kisi-izgara">
+    {% for k in kisiler %}
+    <article class="kisi">
+      {% if k.foto %}<img src="{{ k.foto | relative_url }}" alt="{{ k.title }}" loading="lazy">{% else %}<div class="kisi-bos" aria-hidden="true">{{ k.title | slice: 0 }}</div>{% endif %}
+      <h3>{{ k.title }}</h3>
+      {% if k.unvan %}<p class="kisi-unvan">{{ k.unvan }}</p>{% endif %}
+      <p class="kisi-baglanti">
+        {% if k.eposta %}<a href="mailto:{{ k.eposta }}">E-posta</a>{% endif %}
+        {% if k.linkedin %}<a href="{{ k.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+      </p>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}{{ bos }}{% endif %}
+
+{% when "isbirlikleri" %}
+  {% include logo-izgara.html logolar=site.data.isbirlikleri.logolar %}
+  {% if site.data.isbirlikleri.logolar.size == 0 %}{{ bos }}{% endif %}
+
+{% when "cozum-ortaklari" %}
+  {% include logo-izgara.html logolar=site.data.cozum_ortaklari.logolar %}
+  {% if site.data.cozum_ortaklari.logolar.size == 0 %}{{ bos }}{% endif %}
+
+{% when "girisimciler" %}
+  {% assign liste = site.girisimciler | sort: "title" %}
+  {% if liste.size > 0 %}
+  <div class="girisim-izgara">
+    {% for gi in liste %}
+    <article class="girisim">
+      {% if gi.logo %}<img class="girisim-logo" src="{{ gi.logo | relative_url }}" alt="{{ gi.title }} logosu" loading="lazy">{% endif %}
+      <h3><a href="{{ gi.url | relative_url }}">{{ gi.title }}</a></h3>
+      {% if gi.alan %}<p class="rozet">{{ gi.alan }}</p>{% endif %}
+      {% if gi.ozet %}<p>{{ gi.ozet }}</p>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}{{ bos }}{% endif %}
+
+{% when "firsatlar" %}
+  {% assign liste = site.cagrilar | where: "tur", "Girişimcilik Fırsatı" %}
+  {% include cagri-listesi.html liste=liste %}
+
+{% when "takvim" %}
+  {% assign liste = site.etkinlikler | sort: "date", "last" %}
+  {% if liste.size > 0 %}
+  <div class="takvim" data-takvim>
+    <h2 class="takvim-baslik">Yaklaşan faaliyetler</h2>
+    <ol class="takvim-liste" data-yaklasan>
+      {% for e in liste %}
+      <li class="takvim-oge" data-tarih="{{ e.date | date: '%Y-%m-%d' }}">
+        <time class="takvim-gun" datetime="{{ e.date | date: '%Y-%m-%d' }}"><span>{{ e.date | date: "%d" }}</span>{{ e.date | date: "%m.%Y" }}</time>
+        <div>
+          <h3><a href="{{ e.url | relative_url }}">{{ e.title }}</a></h3>
+          {% if e.yer %}<p class="yazi-tarih">{{ e.yer }}</p>{% endif %}
+          {% if e.ozet %}<p>{{ e.ozet }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+    <p class="bos" data-yaklasan-yok hidden>Planlanmış yaklaşan faaliyet yok.</p>
+    <details class="takvim-gecmis" data-gecmis-kutu hidden>
+      <summary>Geçmiş faaliyetler</summary>
+      <ol class="takvim-liste" data-gecmis></ol>
+    </details>
+  </div>
+  {% else %}{{ bos }}{% endif %}
+
+{% when "patentler" %}
+  {% assign liste = site.patentler | sort: "date", "last" | reverse %}
+  {% if liste.size > 0 %}
+  <div class="tablo-kap">
+    <table class="tablo">
+      <thead><tr><th>Patent</th><th>Başvuru / tescil no</th><th>Durum</th><th>Tarih</th></tr></thead>
+      <tbody>
+        {% for p in liste %}
+        <tr>
+          <td><a href="{{ p.url | relative_url }}">{{ p.title }}</a>{% if p.alan %}<br><span class="yazi-tarih">{{ p.alan }}</span>{% endif %}</td>
+          <td>{{ p.basvuru_no }}</td>
+          <td>{% if p.durum %}<span class="rozet">{{ p.durum }}</span>{% endif %}</td>
+          <td>{% if p.date %}{{ p.date | date: "%d.%m.%Y" }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}{{ bos }}{% endif %}
+
+{% when "kariyer" %}
+  {% assign liste = site.kariyer | sort: "son_tarih", "last" %}
+  {% if liste.size > 0 %}
+  <div class="cagri-izgara" data-cagri-liste>
+    {% for k in liste %}
+    <article class="cagri"{% if k.son_tarih %} data-son="{{ k.son_tarih | date: '%Y-%m-%d' }}"{% endif %}>
+      <p class="cagri-ust">
+        {% if k.calisma_turu %}<span class="rozet">{{ k.calisma_turu }}</span>{% endif %}
+        <span class="durum"></span>
+      </p>
+      <h3><a href="{{ k.url | relative_url }}">{{ k.title }}</a></h3>
+      {% if k.konum %}<p class="cagri-destek">{{ k.konum }}</p>{% endif %}
+      {% if k.son_tarih %}<p class="cagri-tarih">Son başvuru <time datetime="{{ k.son_tarih | date: '%Y-%m-%d' }}">{{ k.son_tarih | date: "%d.%m.%Y" }}</time></p>{% endif %}
+      {% if k.basvuru_link %}<a class="dugme" href="{{ k.basvuru_link }}" target="_blank" rel="noopener">Başvur</a>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}<p class="bos">Şu an açık pozisyon bulunmuyor.</p>{% endif %}
+
+{% when "blog" %}
+  {% assign liste = site.blog | sort: "date", "first" | reverse %}
+  {% if liste.size > 0 %}
+  <div class="yazi-izgara">{% for y in liste %}{% include yazi-kart.html y=y %}{% endfor %}</div>
+  {% else %}{{ bos }}{% endif %}
+
+{% endcase %}

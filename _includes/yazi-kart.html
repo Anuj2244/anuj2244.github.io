@@ -1,7 +1,12 @@
 {% assign y = include.y %}
 <article class="yazi">
-  {% if y.gorsel %}<img src="{{ y.gorsel | relative_url }}" alt="" loading="lazy">{% endif %}
-  <p class="yazi-tarih"><time datetime="{{ y.date | date: '%Y-%m-%d' }}">{{ y.date | date: "%d.%m.%Y" }}</time>{% if y.firma %}<span>{{ y.firma }}</span>{% endif %}{% if y.yer %}<span>{{ y.yer }}</span>{% endif %}</p>
+  {% if y.gorsel %}<a href="{{ y.url | relative_url }}" tabindex="-1"><img src="{{ y.gorsel | relative_url }}" alt="" loading="lazy"></a>{% endif %}
+  <p class="yazi-tarih">
+    {% if include.etiket %}<span class="rozet">{{ include.etiket }}</span>{% endif %}
+    <time datetime="{{ y.date | date: '%Y-%m-%d' }}">{{ y.date | date: "%d.%m.%Y" }}</time>
+    {% if y.firma %}<span>{{ y.firma }}</span>{% endif %}{% if y.yer %}<span>{{ y.yer }}</span>{% endif %}
+  </p>
   <h3><a href="{{ y.url | relative_url }}">{{ y.title }}</a></h3>
   {% if y.ozet %}<p>{{ y.ozet }}</p>{% endif %}
+  <a class="devam" href="{{ y.url | relative_url }}" aria-label="{{ y.title }} detayı">Detay</a>
 </article>
