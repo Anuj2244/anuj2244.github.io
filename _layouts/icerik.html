@@ -18,6 +18,7 @@ layout: default
       <dt>Son başvuru</dt><dd><time datetime="{{ page.son_tarih | date: '%Y-%m-%d' }}">{{ page.son_tarih | date: "%d.%m.%Y" }}</time> <span class="durum"></span></dd>
       {% if page.destek %}<dt>Destek</dt><dd>{{ page.destek }}</dd>{% endif %}
       {% if page.hedef %}<dt>Kimler başvurabilir</dt><dd>{{ page.hedef }}</dd>{% endif %}
+      {% for e in page.ek_bilgiler %}{% if e.baslik %}<dt>{{ e.baslik }}</dt><dd>{{ e.deger }}</dd>{% endif %}{% endfor %}
     </dl>
     {% if page.link %}<a class="dugme" href="{{ page.link }}" target="_blank" rel="noopener">Çağrı sayfasına git</a>{% endif %}
   </div>
