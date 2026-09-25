@@ -7,5 +7,6 @@
   <h3><a href="{{ c.url | relative_url }}">{{ c.title }}</a></h3>
   <p class="cagri-tarih">Son başvuru <time datetime="{{ c.son_tarih | date: '%Y-%m-%d' }}">{{ c.son_tarih | date: "%d.%m.%Y" }}</time></p>
   {% if c.destek %}<p class="cagri-destek">{{ c.destek }}</p>{% endif %}
+  {% for e in c.ek_bilgiler %}{% if e.kartta and e.baslik %}<p class="cagri-destek">{{ e.baslik }}: {{ e.deger }}</p>{% endif %}{% endfor %}
   {% if c.link %}<a class="dugme" href="{{ c.link }}" target="_blank" rel="noopener">Çağrı sayfasına git</a>{% endif %}
 </article>
