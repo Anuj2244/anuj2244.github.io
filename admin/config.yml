@@ -1,0 +1,129 @@
+backend:
+  name: github
+  repo: cemalyildiz/cemalyildiz.github.io
+  branch: main
+
+media_folder: assets/img
+public_folder: /assets/img
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: duyurular
+    label: Duyurular ve haberler
+    label_singular: Duyuru
+    folder: _duyurular
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Başlık, name: title, widget: string }
+      - { label: Tarih, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { label: Kısa özet, name: ozet, widget: text, required: false }
+      - { label: Görsel, name: gorsel, widget: image, required: false }
+      - { label: İçerik, name: body, widget: markdown, required: false }
+
+  - name: cagrilar
+    label: Çağrılar
+    label_singular: Çağrı
+    folder: _cagrilar
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} (son başvuru {{son_tarih}})"
+    sortable_fields: [son_tarih, title, date]
+    fields:
+      - { label: Çağrı adı, name: title, widget: string }
+      - { label: Program türü, name: tur, widget: select, options: [TÜBİTAK, Uluslararası, Diğer] }
+      - { label: Son başvuru tarihi, name: son_tarih, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { label: Destek bilgisi, name: destek, widget: string, required: false }
+      - { label: Kimler başvurabilir, name: hedef, widget: string, required: false }
+      - { label: Çağrının resmi sayfası, name: link, widget: string, required: false, hint: "https:// ile başlayan tam adres" }
+      - { label: Eklenme tarihi, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { label: Açıklama, name: body, widget: markdown, required: false }
+
+  - name: ziyaretler
+    label: Firma ziyaretleri
+    label_singular: Ziyaret
+    folder: _ziyaretler
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Başlık, name: title, widget: string }
+      - { label: Firma adı, name: firma, widget: string, required: false }
+      - { label: Ziyaret tarihi, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { label: Kısa özet, name: ozet, widget: text, required: false }
+      - { label: Görsel, name: gorsel, widget: image, required: false }
+      - { label: Ziyaret notları, name: body, widget: markdown, required: false }
+
+  - name: etkinlikler
+    label: Etkinlikler
+    label_singular: Etkinlik
+    folder: _etkinlikler
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Etkinlik adı, name: title, widget: string }
+      - { label: Etkinlik tarihi, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { label: Yer, name: yer, widget: string, required: false }
+      - { label: Kısa özet, name: ozet, widget: text, required: false }
+      - { label: Görsel, name: gorsel, widget: image, required: false }
+      - { label: Ayrıntılar, name: body, widget: markdown, required: false }
+
+  - name: sayfalar
+    label: Sayfalar
+    label_singular: Sayfa
+    folder: sayfalar
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Sayfa başlığı, name: title, widget: string }
+      - { label: Sayfa adresi, name: permalink, widget: string, hint: "Örnek /hizmetler/egitimler/ biçiminde yaz. Menüdeki bağlantıyla aynı olmalı." }
+      - { label: İçerik, name: body, widget: markdown, required: false }
+
+  - name: ayarlar
+    label: Site ayarları
+    files:
+      - name: menu
+        label: Menü
+        file: _data/menu.yml
+        fields:
+          - label: Menü başlıkları
+            name: ogeler
+            widget: list
+            summary: "{{fields.baslik}}"
+            fields:
+              - { label: Başlık, name: baslik, widget: string }
+              - { label: Bağlantı, name: link, widget: string, required: false, hint: "Alt başlıkları varsa boş bırak" }
+              - label: Alt başlıklar
+                name: alt
+                widget: list
+                required: false
+                summary: "{{fields.baslik}}"
+                fields:
+                  - { label: Başlık, name: baslik, widget: string }
+                  - { label: Bağlantı, name: link, widget: string }
+      - name: sayaclar
+        label: Sayaçlar
+        file: _data/sayaclar.yml
+        fields:
+          - label: Elle girilen sayaçlar
+            name: sayaclar
+            widget: list
+            summary: "{{fields.etiket}}: {{fields.sayi}}"
+            fields:
+              - { label: Etiket, name: etiket, widget: string }
+              - { label: Sayı, name: sayi, widget: number, value_type: int }
+      - name: genel
+        label: Genel bilgiler
+        file: _data/genel.yml
+        fields:
+          - { label: Site adı, name: site_adi, widget: string }
+          - { label: Ana başlık, name: slogan, widget: string }
+          - { label: Ana sayfa tanıtım metni, name: tanitim, widget: text }
+          - { label: Adres, name: adres, widget: text }
+          - { label: Telefon, name: telefon, widget: string }
+          - { label: E-posta, name: eposta, widget: string }
