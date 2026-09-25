@@ -1,0 +1,8 @@
+{% if include.liste.size > 0 %}
+{% assign sirali = include.liste | sort: "son_tarih", "last" %}
+<div class="cagri-izgara" data-cagri-liste>
+  {% for c in sirali %}{% include cagri-kart.html c=c %}{% endfor %}
+</div>
+{% else %}
+<p class="bos">Bu bölümde henüz çağrı yok. Yönetim panelinden "Çağrılar" kısmına yeni çağrı ekleyebilirsin.</p>
+{% endif %}

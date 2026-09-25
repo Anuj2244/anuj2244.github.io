@@ -1,64 +1,109 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Çağrı ve Proje Takip Platformu</title>
-      .buton { display: inline-block; margin-top: 8px; padding: 8px 14px; background: #0b3d91; color: white; text-decoration: none; border-radius: 5px; }
-    .buton:hover { background: #082c6c; }
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f9; color: #222; }
-    header { background: #0b3d91; color: white; padding: 30px 20px; text-align: center; }
-    nav { background: #082c6c; text-align: center; padding: 10px; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    main { max-width: 900px; margin: 20px auto; padding: 0 15px; }
-    section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-    h2 { color: #0b3d91; border-bottom: 2px solid #e0e6f0; padding-bottom: 8px; }
-    .kart { border-left: 4px solid #0b3d91; padding: 10px 15px; margin: 10px 0; background: #f9fbff; }
-    footer { text-align: center; padding: 20px; color: #777; font-size: 14px; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Çağrı ve Proje Takip Platformu</h1>
-    <p>TÜBİTAK ve uluslararası çağrılar, firma ziyaretleri ve etkinlikler</p>
-  </header>
+---
+layout: default
+title: Ana Sayfa
+---
+{% assign duyurular = site.duyurular | sort: "date", "first" | reverse %}
 
-  <nav>
-    <a href="#cagrilar">Çağrılar</a>
-    <a href="#ziyaretler">Firma Ziyaretleri</a>
-    <a href="#etkinlikler">Etkinlikler</a>
-  </nav>
-
-  <main>
-    <section id="cagrilar">
-      <h2>Açık Çağrılar</h2>
-      <div class="kart">
-        <strong>ÇAĞRI ADI</strong><br>
-        📅 Son başvuru: GG.AA.YYYY<br>
-        💰 Destek: DESTEK BİLGİSİ<br>
-        🎯 Kimler başvurabilir: HEDEF KİTLE<br>
-        <a class="buton" href="https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1832-sanayide-yesil-donusum-cagrisi" target="_blank">Çağrı sayfasına git →</a>
+{% if duyurular.size > 0 %}
+<div class="serit" aria-label="Son duyurular">
+  <div class="kap serit-ic">
+    <span class="serit-etiket">Duyurular</span>
+    <div class="serit-pencere">
+      <div class="serit-akis">
+        <div class="serit-grup">{% for d in duyurular limit: 6 %}<a href="{{ d.url | relative_url }}">{{ d.title }}</a>{% endfor %}</div>
+        <div class="serit-grup" aria-hidden="true">{% for d in duyurular limit: 6 %}<a href="{{ d.url | relative_url }}" tabindex="-1">{{ d.title }}</a>{% endfor %}</div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
+{% endif %}
 
-    <section id="ziyaretler">
-      <h2>Firma Ziyaretleri</h2>
-      <div class="kart">
-        <strong>Örnek ziyaret başlığı</strong><br>
-        Ziyaret notları burada paylaşılacak.
+<section class="giris">
+  <div class="kap giris-ic">
+    <div class="giris-metin">
+      <h1>{{ site.data.genel.slogan }}</h1>
+      <p>{{ site.data.genel.tanitim }}</p>
+      <p class="giris-dugmeler">
+        <a class="dugme" href="{{ '/cagrilar/' | relative_url }}">Açık çağrıları gör</a>
+        <a class="dugme ikincil" href="{{ '/iletisim/' | relative_url }}">Bize ulaşın</a>
+      </p>
+    </div>
+    <aside class="yakin" id="yakin-cagri" aria-live="polite">
+      <p class="yakin-baslik">En yakın son başvuru</p>
+      <p class="yakin-gun"><span data-gun>–</span></p>
+      <p class="yakin-ad"><a data-ad href="{{ '/cagrilar/' | relative_url }}">Çağrılar yükleniyor</a></p>
+      <p class="yakin-tarih" data-tarih></p>
+    </aside>
+  </div>
+  <script type="application/json" id="cagri-verisi">[{% for c in site.cagrilar %}{"t":{{ c.title | jsonify }},"s":"{{ c.son_tarih | date: '%Y-%m-%d' }}","u":{{ c.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]</script>
+</section>
+
+<section class="sayaclar" aria-label="Faaliyetlerimiz sayılarla">
+  <div class="kap sayac-izgara">
+    <div class="sayac"><span class="sayac-sayi" data-sayi="{{ site.ziyaretler.size }}">{{ site.ziyaretler.size }}</span><span class="sayac-ad">Firma ziyareti</span></div>
+    <div class="sayac"><span class="sayac-sayi" data-sayi="{{ site.etkinlikler.size }}">{{ site.etkinlikler.size }}</span><span class="sayac-ad">Etkinlik</span></div>
+    <div class="sayac"><span class="sayac-sayi" data-sayi="{{ site.cagrilar.size }}">{{ site.cagrilar.size }}</span><span class="sayac-ad">Takip edilen çağrı</span></div>
+    {% for s in site.data.sayaclar.sayaclar %}
+    <div class="sayac"><span class="sayac-sayi" data-sayi="{{ s.sayi }}">{{ s.sayi }}</span><span class="sayac-ad">{{ s.etiket }}</span></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="kap blok iki-sutun">
+  <div>
+    <div class="blok-ust">
+      <h2>Haberler ve duyurular</h2>
+      <a href="{{ '/duyurular/' | relative_url }}">Tümü</a>
+    </div>
+    {% if duyurular.size > 0 %}
+    <div class="kaydirici" data-kaydirici>
+      <div class="kaydirici-pencere">
+        {% for d in duyurular limit: 5 %}
+        <article class="slayt{% if forloop.first %} aktif{% endif %}"{% unless forloop.first %} hidden{% endunless %}>
+          {% if d.gorsel %}<img src="{{ d.gorsel | relative_url }}" alt="">{% endif %}
+          <p class="yazi-tarih"><time datetime="{{ d.date | date: '%Y-%m-%d' }}">{{ d.date | date: "%d.%m.%Y" }}</time></p>
+          <h3><a href="{{ d.url | relative_url }}">{{ d.title }}</a></h3>
+          {% if d.ozet %}<p>{{ d.ozet }}</p>{% endif %}
+        </article>
+        {% endfor %}
       </div>
-    </section>
-
-    <section id="etkinlikler">
-      <h2>Etkinlikler</h2>
-      <div class="kart">
-        <strong>Örnek etkinlik</strong><br>
-        Tarih ve yer bilgisi burada yer alacak.
+      {% if duyurular.size > 1 %}
+      <div class="kaydirici-kontrol">
+        <button type="button" data-onceki aria-label="Önceki haber">‹</button>
+        <span data-sira></span>
+        <button type="button" data-sonraki aria-label="Sonraki haber">›</button>
       </div>
-    </section>
-  </main>
+      {% endif %}
+    </div>
+    {% else %}
+    <p class="bos">Henüz duyuru yok.</p>
+    {% endif %}
+  </div>
 
-  <footer>© 2026 Çağrı ve Proje Takip Platformu</footer>
-</body>
-</html>
+  <div>
+    <div class="blok-ust">
+      <h2>Açık çağrılar</h2>
+      <a href="{{ '/cagrilar/' | relative_url }}">Tümü</a>
+    </div>
+    {% assign acik = site.cagrilar | sort: "son_tarih", "last" %}
+    <div class="cagri-dikey" data-cagri-liste data-sadece-acik data-limit="3">
+      {% for c in acik %}{% include cagri-kart.html c=c %}{% endfor %}
+    </div>
+    <p class="bos" data-acik-yok hidden>Şu an açık çağrı yok.</p>
+  </div>
+</section>
+
+<section class="kap blok">
+  <div class="blok-ust">
+    <h2>Son faaliyetler</h2>
+    <a href="{{ '/faaliyetler/' | relative_url }}">Tümü</a>
+  </div>
+  {% assign faaliyetler = site.ziyaretler | concat: site.etkinlikler | sort: "date", "first" | reverse %}
+  {% if faaliyetler.size > 0 %}
+  <div class="yazi-izgara">
+    {% for y in faaliyetler limit: 3 %}{% include yazi-kart.html y=y %}{% endfor %}
+  </div>
+  {% else %}
+  <p class="bos">Henüz faaliyet eklenmedi.</p>
+  {% endif %}
+</section>

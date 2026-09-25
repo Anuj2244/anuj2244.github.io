@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<div class="kap sayfa">
+  <h1>{{ page.title }}</h1>
+  <div class="metin">
+    {{ content }}
+  </div>
+  {% if page.url == "/iletisim/" %}
+  <dl class="iletisim-kutu">
+    <dt>Adres</dt><dd>{{ site.data.genel.adres }}</dd>
+    <dt>Telefon</dt><dd><a href="tel:{{ site.data.genel.telefon | remove: ' ' }}">{{ site.data.genel.telefon }}</a></dd>
+    <dt>E-posta</dt><dd><a href="mailto:{{ site.data.genel.eposta }}">{{ site.data.genel.eposta }}</a></dd>
+  </dl>
+  {% endif %}
+</div>

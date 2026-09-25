@@ -1,0 +1,9 @@
+---
+layout: sayfa
+title: Etkinlikler
+permalink: /faaliyetler/etkinlikler/
+---
+{% assign liste = site.etkinlikler | sort: "date", "first" | reverse %}
+{% if liste.size > 0 %}
+<div class="yazi-izgara">{% for y in liste %}{% include yazi-kart.html y=y %}{% endfor %}</div>
+{% else %}<p class="bos">Henüz etkinlik eklenmedi.</p>{% endif %}

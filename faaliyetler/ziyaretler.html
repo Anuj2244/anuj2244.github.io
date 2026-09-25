@@ -1,0 +1,9 @@
+---
+layout: sayfa
+title: Firma Ziyaretleri
+permalink: /faaliyetler/ziyaretler/
+---
+{% assign liste = site.ziyaretler | sort: "date", "first" | reverse %}
+{% if liste.size > 0 %}
+<div class="yazi-izgara">{% for y in liste %}{% include yazi-kart.html y=y %}{% endfor %}</div>
+{% else %}<p class="bos">Henüz firma ziyareti eklenmedi.</p>{% endif %}

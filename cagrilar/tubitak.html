@@ -1,0 +1,7 @@
+---
+layout: sayfa
+title: TÜBİTAK Çağrıları
+permalink: /cagrilar/tubitak/
+---
+{% assign liste = site.cagrilar | where: "tur", "TÜBİTAK" %}
+{% include cagri-listesi.html liste=liste %}

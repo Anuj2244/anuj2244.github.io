@@ -1,0 +1,4 @@
+# Elle girilen sayaçlar. Ziyaret, etkinlik ve çağrı sayıları ayrıca otomatik sayılır.
+sayaclar:
+  - etiket: Desteklenen proje
+    sayi: 0

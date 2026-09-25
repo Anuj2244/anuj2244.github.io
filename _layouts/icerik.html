@@ -1,0 +1,36 @@
+---
+layout: default
+---
+<article class="kap sayfa">
+  {% case page.collection %}
+    {% when "cagrilar" %}{% assign geri = "/cagrilar/" %}{% assign geri_ad = "Tüm çağrılar" %}
+    {% when "ziyaretler" %}{% assign geri = "/faaliyetler/ziyaretler/" %}{% assign geri_ad = "Firma ziyaretleri" %}
+    {% when "etkinlikler" %}{% assign geri = "/faaliyetler/etkinlikler/" %}{% assign geri_ad = "Etkinlikler" %}
+    {% else %}{% assign geri = "/duyurular/" %}{% assign geri_ad = "Duyurular" %}
+  {% endcase %}
+  <p class="geri"><a href="{{ geri | relative_url }}">{{ geri_ad }}</a></p>
+  <h1>{{ page.title }}</h1>
+
+  {% if page.collection == "cagrilar" %}
+  <div class="cagri-bilgi" data-son="{{ page.son_tarih | date: '%Y-%m-%d' }}">
+    <dl>
+      {% if page.tur %}<dt>Program</dt><dd>{{ page.tur }}</dd>{% endif %}
+      <dt>Son başvuru</dt><dd><time datetime="{{ page.son_tarih | date: '%Y-%m-%d' }}">{{ page.son_tarih | date: "%d.%m.%Y" }}</time> <span class="durum"></span></dd>
+      {% if page.destek %}<dt>Destek</dt><dd>{{ page.destek }}</dd>{% endif %}
+      {% if page.hedef %}<dt>Kimler başvurabilir</dt><dd>{{ page.hedef }}</dd>{% endif %}
+    </dl>
+    {% if page.link %}<a class="dugme" href="{{ page.link }}" target="_blank" rel="noopener">Çağrı sayfasına git</a>{% endif %}
+  </div>
+  {% else %}
+  <p class="ust-bilgi">
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d.%m.%Y" }}</time>
+    {% if page.firma %}<span>{{ page.firma }}</span>{% endif %}
+    {% if page.yer %}<span>{{ page.yer }}</span>{% endif %}
+  </p>
+  {% if page.gorsel %}<img class="kapak" src="{{ page.gorsel | relative_url }}" alt="">{% endif %}
+  {% endif %}
+
+  <div class="metin">
+    {{ content }}
+  </div>
+</article>

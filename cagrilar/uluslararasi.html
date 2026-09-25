@@ -1,0 +1,7 @@
+---
+layout: sayfa
+title: Uluslararası Çağrılar
+permalink: /cagrilar/uluslararasi/
+---
+{% assign liste = site.cagrilar | where: "tur", "Uluslararası" %}
+{% include cagri-listesi.html liste=liste %}

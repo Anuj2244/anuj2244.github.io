@@ -1,0 +1,35 @@
+# Site ayarları (bu dosyayı genelde değiştirmen gerekmez)
+lang: tr
+timezone: Europe/Istanbul
+markdown: kramdown
+future: true
+
+collections:
+  cagrilar:
+    output: true
+    permalink: /cagrilar/:name/
+  ziyaretler:
+    output: true
+    permalink: /faaliyetler/ziyaretler/:name/
+  etkinlikler:
+    output: true
+    permalink: /faaliyetler/etkinlikler/:name/
+  duyurular:
+    output: true
+    permalink: /duyurular/:name/
+
+defaults:
+  - scope: { path: "", type: cagrilar }
+    values: { layout: icerik }
+  - scope: { path: "", type: ziyaretler }
+    values: { layout: icerik }
+  - scope: { path: "", type: etkinlikler }
+    values: { layout: icerik }
+  - scope: { path: "", type: duyurular }
+    values: { layout: icerik }
+  - scope: { path: "sayfalar" }
+    values: { layout: sayfa }
+
+exclude:
+  - README.md
+  - .pages.yml

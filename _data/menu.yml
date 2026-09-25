@@ -1,0 +1,41 @@
+ogeler:
+  - baslik: Ana Sayfa
+    link: /
+  - baslik: Kurumsal
+    link: ""
+    alt:
+      - baslik: Hakkımızda
+        link: /kurumsal/hakkimizda/
+      - baslik: Misyon & Vizyon
+        link: /kurumsal/misyon-vizyon/
+      - baslik: Ekibimiz
+        link: /kurumsal/ekibimiz/
+  - baslik: Hizmetler
+    link: ""
+    alt:
+      - baslik: Proje Danışmanlığı
+        link: /hizmetler/proje-danismanligi/
+      - baslik: Çağrı Takibi
+        link: /hizmetler/cagri-takibi/
+      - baslik: Eğitimler
+        link: /hizmetler/egitimler/
+  - baslik: Faaliyetler
+    link: ""
+    alt:
+      - baslik: Firma Ziyaretleri
+        link: /faaliyetler/ziyaretler/
+      - baslik: Etkinlikler
+        link: /faaliyetler/etkinlikler/
+  - baslik: Çağrılar
+    link: ""
+    alt:
+      - baslik: Tüm Çağrılar
+        link: /cagrilar/
+      - baslik: TÜBİTAK Çağrıları
+        link: /cagrilar/tubitak/
+      - baslik: Uluslararası Çağrılar
+        link: /cagrilar/uluslararasi/
+  - baslik: Duyurular
+    link: /duyurular/
+  - baslik: İletişim
+    link: /iletisim/

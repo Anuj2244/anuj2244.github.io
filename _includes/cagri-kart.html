@@ -1,0 +1,11 @@
+{% assign c = include.c %}
+<article class="cagri" data-son="{{ c.son_tarih | date: '%Y-%m-%d' }}">
+  <p class="cagri-ust">
+    {% if c.tur %}<span class="rozet">{{ c.tur }}</span>{% endif %}
+    <span class="durum"></span>
+  </p>
+  <h3><a href="{{ c.url | relative_url }}">{{ c.title }}</a></h3>
+  <p class="cagri-tarih">Son başvuru <time datetime="{{ c.son_tarih | date: '%Y-%m-%d' }}">{{ c.son_tarih | date: "%d.%m.%Y" }}</time></p>
+  {% if c.destek %}<p class="cagri-destek">{{ c.destek }}</p>{% endif %}
+  {% if c.link %}<a class="dugme" href="{{ c.link }}" target="_blank" rel="noopener">Çağrı sayfasına git</a>{% endif %}
+</article>
